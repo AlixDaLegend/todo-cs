@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AppConfig } from './app.config';
+import { NavLink } from './core/models/nav-link';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'todo';
+  navLinks: NavLink[] = [];
+
+  constructor(){
+    this.navLinks = Object.values(AppConfig.routing)
+  }
+  
 }

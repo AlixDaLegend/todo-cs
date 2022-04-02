@@ -1,0 +1,44 @@
+<mat-sidenav-container class="sidenav-container">
+
+
+    <mat-sidenav-content class="casperContentContainer">
+        <mat-toolbar color="primary">
+
+            <!-- Main app logo -->
+            <img src="./assets/images/logo_todo_nobg.png" class="toolbar-main-logo">
+
+            <!-- Main app name -->
+            <span class="navTitle">{{title}}</span>
+
+            <div *ngFor="let navLink of navLinks">
+                <button mat-button [routerLink]="navLink.path" [routerLinkActive]="['active-link']" class="navLink">
+                    <!-- <mat-icon ng-if="navLink.icon">{{ navLink.icon }}</mat-icon>&nbsp;&nbsp;  -->
+                    {{navLink.label}}
+                </button>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="end center" fxFlex="grow">
+                <ng-template [ngTemplateOutlet]="userHelpMenuTemplate"></ng-template>
+            </div>
+
+
+        </mat-toolbar>
+
+        <!-- App single page Content -->
+        <ng-content></ng-content>
+
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+<ng-template #userHelpMenuTemplate>
+    <button mat-icon-button [matMenuTriggerFor]="helpMenu">
+        <mat-icon>help</mat-icon>
+    </button>
+</ng-template>
+
+<mat-menu #helpMenu="matMenu">
+    <button mat-menu-item><a href="mailto:alixperard@gmail.com" target="_top">
+            <mat-icon>mail</mat-icon>Mail to admin
+        </a></button>
+    <div mat-menu-item><b>Version </b><span>{{appVersion}}</span></div>
+</mat-menu>

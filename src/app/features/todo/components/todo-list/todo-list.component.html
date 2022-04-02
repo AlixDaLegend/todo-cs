@@ -1,0 +1,14 @@
+<div>
+    <h2 fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon>format_list_bulleted</mat-icon>My Todo list
+    </h2>
+</div>
+
+<mat-list >
+    <mat-list-item *ngFor="let todo of todos" class="mat-elevation-z8 todo-list-item">
+        <mat-icon matListIcon [ngClass]="{'success-color': todo.done}">{{todo.done?'task_alt':'pending_actions'}}
+        </mat-icon>
+        <h3 matLine> {{todo.title}} </h3>
+        <div mat-line class="state-indicator">State : {{todo.done?'Done':'Pending'}}</div>
+    </mat-list-item>
+</mat-list>

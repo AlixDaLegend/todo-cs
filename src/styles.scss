@@ -1,1 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+@include mat-core();
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// Theme Configuration
+
+$primary: mat-palette($mat-indigo, 500);
+$accent: mat-palette($mat-pink, A200, A100, A400);
+$warn: mat-palette($mat-red);
+
+$dark-theme: mat-dark-theme($primary, $accent, $warn);
+$light-theme: mat-light-theme($primary, $accent, $warn);
+
+.dark-ui-theme {
+    @include angular-material-theme($dark-theme);
+}
+.light-ui-theme {
+    @include angular-material-theme($light-theme);
+}
+
+// Functional Colors
+$color-functional-green:#9acd32;
+$color-functional-red:#ff5d5d;
+$color-functional-yello:#eac806;
+
+.success-color {
+    color: $color-functional-green;
+}
+
+.error-color {
+    color: $color-functional-red;
+}
+
+// Common style
+$color-primary: mat-color($primary);
+
+h2 {
+    mat-icon {
+        color: $color-primary;
+        font-size: 28px!important;
+        margin-right: 20px;
+    }
+}

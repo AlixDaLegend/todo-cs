@@ -1,0 +1,15 @@
+$mainPagePadding: 5%;
+$loaderSize:120px;
+
+.appPageMainContainer {
+    padding-top: 20px;
+    padding-left: $mainPagePadding;
+    padding-right: $mainPagePadding;
+    height: calc(100vh - 84px);
+    overflow: auto;
+}
+
+.sk-wave{
+    width: $loaderSize !important;
+    height: $loaderSize !important;
+}
