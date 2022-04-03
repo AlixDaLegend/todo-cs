@@ -18,7 +18,7 @@ export class TodoListComponent extends GenericSubscriptionBase implements OnInit
   
   todos$: Observable<any>;
 
-  constructor(private todoService:TodoService, private store: Store<AppState>) { 
+  constructor(private store: Store<AppState>) { 
     super();
     this.todos$ = this.store.select(state => state.todos);
   }
@@ -35,16 +35,18 @@ export class TodoListComponent extends GenericSubscriptionBase implements OnInit
   }
 
   reloadTodos() {
-    /*
-    let subs = this.todoService.getTodos().subscribe(
-      list => {
-        this.todos = list;
-      }
-    );
-
-    this.subscriptions.add(subs);
-    */
     this.store.dispatch({ type: AppActionsType.LOAD });
+  }
+
+  toggleTodoState(todo: Todo){
+     // toggle value
+     let toggledTodo: Todo = {...todo, done: !todo.done}
+
+    this.store.dispatch(
+      {
+          type: AppActionsType.TODO_STATE_TOGGLE, 
+          payload: {toggledTodo}
+      });
   }
 
 }

@@ -3,8 +3,10 @@ import { Todo } from '../shared/models/todo';
 
 export enum AppActionsType {
     LOAD = '[App component] Load Todos',
-    SUCCESS = '[App component] Load Todos success'
+    LOAD_SUCCESS = '[App component] Load Todos success',
+    TODO_STATE_TOGGLE = '[App component] Toggle todo state'
 }
 
 export const loadTodosAction = createAction(AppActionsType.LOAD);
-export const loadTodosSuccessAction = createAction(AppActionsType.SUCCESS, props<{ payload: { todos: Todo[] } }>());
+export const loadTodosSuccessAction = createAction(AppActionsType.LOAD_SUCCESS, props<{ payload: { todos: Todo[] } }>());
+export const toggleTodoStateAction = createAction(AppActionsType.TODO_STATE_TOGGLE, props<{ payload: { toggledTodo: Todo } }>());

@@ -7,7 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 const angularModules = [
@@ -17,8 +17,8 @@ const angularModules = [
   MatIconModule,
   MatToolbarModule,
   MatSidenavModule,
-  FlexLayoutModule,
-  MatMenuModule
+  MatMenuModule,
+  MatCheckboxModule
 ]
 
 const thirdPartyModules = [

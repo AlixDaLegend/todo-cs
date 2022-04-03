@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { AppState } from 'src/app/store-conf/app.state';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { toggleTodoStateAction } from 'src/app/store-conf/app.actions';
 
 describe('TodoListComponent', () => {
   let component: TodoListComponent;
@@ -52,6 +53,14 @@ describe('TodoListComponent', () => {
     expect(component.todos.length).toBe(todoList.length);
     expect(compiledNativeElement.querySelectorAll('mat-list-item').length).toBe(todoList.length);
     
+  });
+
+  it('toggle item state', () => {
+    const dispatchSpy = spyOn(store, 'dispatch').and.callThrough();  
+
+    component.toggleTodoState(todoList[0]);
+    //expect(dispatchSpy).toHaveBeenCalledWith(toggleTodoStateAction);
+    expect(dispatchSpy).toHaveBeenCalled();
   });
 
   it('destroy all subscriptions', () => {

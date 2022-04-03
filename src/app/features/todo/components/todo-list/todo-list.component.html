@@ -4,11 +4,22 @@
     </h2>
 </div>
 
-<mat-list >
+<mat-list>
+    <ng-template [ngTemplateOutlet]="todoListItemTemplate" [ngTemplateOutletContext]="{todos:todos}"></ng-template>
+</mat-list>
+
+<ng-template #todoListItemTemplate let-todos="todos">
     <mat-list-item *ngFor="let todo of todos" class="mat-elevation-z8 todo-list-item">
         <mat-icon matListIcon [ngClass]="{'success-color': todo.done}">{{todo.done?'task_alt':'pending_actions'}}
         </mat-icon>
-        <h3 matLine> {{todo.title}} </h3>
-        <div mat-line class="state-indicator">State : {{todo.done?'Done':'Pending'}}</div>
+        <h3 matLine> <span [ngClass]="{'crossed-out': !todo.done}">{{todo.title}}</span> 
+            <mat-checkbox class="todo-checkbox" (click)="toggleTodoState(todo)" [checked]="todo.done"></mat-checkbox>
+            <!--  
+            <div fxLayout="row" fxLayoutAlign="end" fxFlex="grow">
+                <mat-checkbox class="example-margin" [checked]="todo.done"></mat-checkbox>
+            </div> 
+            -->
+        </h3>
+        <div mat-line class="state-indicator">State : {{todo.done?'Done':'Undone'}}</div>
     </mat-list-item>
-</mat-list>
+</ng-template>

@@ -7,6 +7,9 @@ export const scenarios: Scenarios = {
       method: 'GET',
       response: [
         {
+          title: "Read the manuel",
+          done: false
+        },{
           title: "Contact Product Owner for roadmap",
           done: false
         },

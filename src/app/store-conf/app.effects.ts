@@ -12,7 +12,7 @@ export class TodoEffects {
     ofType(AppActionsType.LOAD),
     mergeMap(() => this.todoService.getTodos()
       .pipe(
-        map(todos => ({ type: AppActionsType.SUCCESS, payload: {todos } })),
+        map(todos => ({ type: AppActionsType.LOAD_SUCCESS, payload: {todos } })),
         catchError(() => EMPTY)
       ))
     )

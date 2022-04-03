@@ -6,3 +6,12 @@
     color: darkgray;
     font-size: 12px;
 }
+
+.todo-checkbox{
+    margin-left: 20px;
+}
+
+.crossed-out{
+    // TODO apply image with opacity instead
+    text-decoration: line-through;
+}
