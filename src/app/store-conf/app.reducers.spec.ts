@@ -9,6 +9,11 @@ describe('AppTodosReducer', () => {
         id: 0,
         title: "Contact Product Owner for roadmap",
         done: false
+    },
+    {
+      id: 1,
+      title: "Other",
+      done: false
     }];
 
 
@@ -31,14 +36,14 @@ describe('AppTodosReducer', () => {
     describe('toggle action', () => {
 
         it("return the state with the todo's state changed", () => {
-            let appState: AppState = {
-                todos: [todoList[0]]
-            }
             // To done
-            let expectedState: AppState = {
-                todos: [{...todoList[0], done:!todoList[0].done }]
+            let appState: AppState = {
+                todos: [todoList[1],todoList[0]]
             }
-            let toggledTodo: Todo = {...todoList[0], done:!todoList[0].done };
+            let expectedState: AppState = {
+                todos: [{...todoList[1], done:!todoList[1].done }, todoList[0]]
+            }
+            let toggledTodo: Todo = {...todoList[1], done:!todoList[1].done };
             let action = {
                 type: AppActionsType.TODO_STATE_TOGGLE,
                 payload: { toggledTodo }
@@ -58,7 +63,10 @@ describe('AppTodosReducer', () => {
                 payload: { toggledTodo }
             };
             expect(appTodosReducer(appState, action)).toEqual(expectedState);
+            
         });
+
+        
     });
 
     describe('load todos', () => {
