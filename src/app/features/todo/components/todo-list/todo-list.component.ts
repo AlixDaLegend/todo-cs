@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -7,6 +8,7 @@ import { GenericSubscriptionBase } from 'src/app/shared/generic/GenericSubscript
 import { Todo } from 'src/app/shared/models/todo';
 import { AppActionsType } from 'src/app/store-conf/app.actions';
 import { AppState } from 'src/app/store-conf/app.state';
+import { TodoEditionComponent } from '../todo-edition/todo-edition.component';
 
 @Component({
   selector: 'app-todo-list',
@@ -19,7 +21,7 @@ export class TodoListComponent extends GenericSubscriptionBase implements OnInit
   
   todos$: Observable<any>;
 
-  constructor(private store: Store<AppState>, private router: Router) { 
+  constructor(private store: Store<AppState>, private router: Router, private dialog: MatDialog) { 
     super();
     this.todos$ = this.store.select(state => state.todos);
   }
@@ -55,8 +57,13 @@ export class TodoListComponent extends GenericSubscriptionBase implements OnInit
   }
 
   goToTodoDetail(todo: Todo) {
-    //this.router.navigate([AppConfig.routing.mytodos.path + '/detail', { title: todo.title }]);
     this.router.navigate([AppConfig.routing.mytodos.path + '/detail/' + todo.id ]);
+  }
+
+  createNewTodo(){
+    this.dialog.open(TodoEditionComponent, {
+      width: '500px'
+    });
   }
 
 }

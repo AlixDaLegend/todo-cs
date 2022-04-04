@@ -32,6 +32,18 @@ export const scenarios: Scenarios = {
       responseCode: 200,
       delay: 1000,
     },
+    {
+      url: /todo/,
+      method: 'POST',
+      response: {
+        id: 1487556966,
+        title: "New from Backend",
+        description: "New ",
+        done: false
+      },
+      responseCode: 200,
+      delay: 1000,
+    }
   ]
 };
 

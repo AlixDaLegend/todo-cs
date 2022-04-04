@@ -39,6 +39,11 @@ export const appTodosReducer = createReducer(
     }
 
     return ({ ...state, todos: newTodos })
-  })
+  }),
+
+  on(AppActions.createTodoSuccessStateAction, (state, { payload }) => {
+    let newTodos: Todo[] = [payload.created, ...state.todos];
+    return ({ ...state, todos: newTodos })
+  }),
 
 );

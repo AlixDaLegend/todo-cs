@@ -1,0 +1,22 @@
+<div mat-dialog-title fxLayout="row" fxLayout="start center">
+    <mat-icon color="primary">task</mat-icon><span>New Todo</span>
+</div>
+<div mat-dialog-content>
+    <form [formGroup]="todoForm" (ngSubmit)="validateEdition(todoForm.value)">
+        <mat-form-field appearance="outline" fxFill>
+            <mat-label>Title</mat-label>
+            <input matInput placeholder="Title" formControlName="title">
+            <mat-hint>Short label for task</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFill>
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description">
+        </mat-form-field>
+        <mat-checkbox color="primary" formControlName="done">Done</mat-checkbox>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close type="button">Cancel</button>
+    <button mat-button (click)="validateEdition(todoForm.value)" color="primary" 
+    [disabled]="todoForm.pristine || !todoForm.valid">Create</button>
+</div>

@@ -13,4 +13,8 @@ export class TodoService {
   getTodos(): Observable<Todo[]> {
     return this.httpClient.get<Todo[]>(`/mytodos/all`);
   }
+
+  createTodo(toCreate: Todo): Observable<Todo> {
+    return this.httpClient.post<Todo>(`/todo`, toCreate);
+  }
 }
