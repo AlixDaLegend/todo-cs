@@ -6,6 +6,7 @@ import { AppState, initialState } from "./app.state";
 describe('AppTodosReducer', () => {
 
     const todoList: Todo[] = [{
+        id: 0,
         title: "Contact Product Owner for roadmap",
         done: false
     }];
@@ -29,7 +30,7 @@ describe('AppTodosReducer', () => {
 
     describe('toggle action', () => {
 
-        it('return the default state', () => {
+        it("return the state with the todo's state changed", () => {
             let appState: AppState = {
                 todos: [todoList[0]]
             }
@@ -62,7 +63,7 @@ describe('AppTodosReducer', () => {
 
     describe('load todos', () => {
 
-        it('return the default state', () => {
+        it('update the todo list', () => {
             let appState: AppState = {
                 todos: []
             }
@@ -70,7 +71,6 @@ describe('AppTodosReducer', () => {
                 todos: todoList
             }
             // To done
-            let toggledTodo: Todo = {...todoList[0], done:true };
             let action = {
                 type: AppActionsType.LOAD_SUCCESS,
                 payload: { todos: todoList }

@@ -1,0 +1,22 @@
+<div>
+    <h2 fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon>task</mat-icon>Todo detail
+    </h2>
+</div>
+
+<div *ngIf="!hasData()">No corresponding item found.</div>
+
+<div *ngIf="hasData()" fxLayout="column" fxLayoutGap="20px" class="mat-elevation-z8 detail-container">
+    <div fxLayout="column" fxLayoutGap="5px">
+        <label>Title</label>
+        <span>{{todo?.title}}</span>
+    </div>
+    <div fxLayout="column" fxLayoutGap="5px">
+        <label>Description</label>
+        <span>{{todo?.description || '-'}}</span>
+    </div>
+    <div fxLayout="column" fxLayoutGap="5px">
+        <label>State</label>
+        <span>{{todo?.done ? 'Done':'Undone'}}</span>
+    </div>
+</div>

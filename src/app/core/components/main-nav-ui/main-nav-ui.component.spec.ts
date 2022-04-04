@@ -26,11 +26,9 @@ describe('MainNavUIComponent', () => {
     expect(component.title).toEqual('TODO');
   });
 
-  describe('ngOnInit()', () => {
-    it('initialize component properly', () => {
-      fixture.detectChanges();
-      expect(component).toBeTruthy();
-    });
+  it('initialize components properly', () => {
+    fixture.detectChanges();
+    expect(component).toBeTruthy();
   });
 
 

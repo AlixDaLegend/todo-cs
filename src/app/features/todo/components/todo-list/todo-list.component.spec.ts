@@ -1,21 +1,25 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { AppConfig } from 'src/app/app.config';
 import { Todo } from 'src/app/shared/models/todo';
-import { TodoListComponent } from './todo-list.component';
-import { Store } from '@ngrx/store';
-import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { AppState } from 'src/app/store-conf/app.state';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { toggleTodoStateAction } from 'src/app/store-conf/app.actions';
+import { AppActionsType } from 'src/app/store-conf/app.actions';
+import { AppState } from 'src/app/store-conf/app.state';
+import { TodoDetailComponent } from '../todo-detail/todo-detail.component';
+import { TodoListComponent } from './todo-list.component';
 
 describe('TodoListComponent', () => {
   let component: TodoListComponent;
   let fixture: ComponentFixture<TodoListComponent>;
   let controller: HttpTestingController;
   let compiledNativeElement: HTMLElement;
-
+  let router: Router;
   
   const todoList: Todo[] = [{
+    id: 0,
     title: "Contact Product Owner for roadmap",
     done: false
   }];
@@ -27,11 +31,18 @@ describe('TodoListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [TodoListComponent],
-      imports: [HttpClientTestingModule, SharedModule],
-      providers: [provideMockStore({ initialState  })],
+      imports: [
+        HttpClientTestingModule, 
+        SharedModule,
+        RouterTestingModule.withRoutes(
+          [{path: AppConfig.routing.mytodos.path + '/detail', component: TodoDetailComponent}]
+        )  
+      ],
+      providers: [provideMockStore({ initialState  })]
     })
       .compileComponents();
   });
+
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TodoListComponent);
@@ -39,7 +50,8 @@ describe('TodoListComponent', () => {
     controller = TestBed.inject(HttpTestingController);
     compiledNativeElement = fixture.nativeElement as HTMLElement;
     store = TestBed.inject(MockStore);
-
+    router = TestBed.inject(Router);
+    
     fixture.detectChanges();
   });
 
@@ -55,12 +67,33 @@ describe('TodoListComponent', () => {
     
   });
 
-  it('toggle item state', () => {
+  it('toggle todo state', () => {
     const dispatchSpy = spyOn(store, 'dispatch').and.callThrough();  
 
     component.toggleTodoState(todoList[0]);
     //expect(dispatchSpy).toHaveBeenCalledWith(toggleTodoStateAction);
     expect(dispatchSpy).toHaveBeenCalled();
+  });
+
+  it('go to todo detail', () => {
+    // const location: Location = TestBed.inject(Location);
+    // component.goToTodoDetail(todoList[0]);
+    // expect(location.path()).toBe(AppConfig.routing.mytodos.path + '/detail');
+
+    let todo = todoList[0];
+    const navigateSpy = spyOn(router, 'navigate');    
+    component.goToTodoDetail(todo);
+    expect(navigateSpy).toHaveBeenCalledWith([AppConfig.routing.mytodos.path + '/detail/'+ todo.id ]);
+  });
+
+  it('should call dispatch to retrieve data if store empty', () => {
+    const dispatchSpy = spyOn(store, 'dispatch').and.callThrough();  
+
+    store.setState({ todos: [] });
+    fixture.detectChanges();
+
+    expect(dispatchSpy).toHaveBeenCalled(); 
+    expect(dispatchSpy).toHaveBeenCalledWith({ type: AppActionsType.LOAD });
   });
 
   it('destroy all subscriptions', () => {

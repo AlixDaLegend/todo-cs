@@ -9,6 +9,7 @@ describe('TodoService', () => {
   let controller: HttpTestingController;
   
   const todoList: Todo[] = [{
+    id: 0,
     title: "Contact Product Owner for roadmap",
     done: false
   }];

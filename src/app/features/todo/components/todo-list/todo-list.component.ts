@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AppActionsType } from 'src/app/store-conf/app.actions';
-import { AppState } from 'src/app/store-conf/app.state';
-import { TodoService } from 'src/app/core/services/todo.service';
+import { AppConfig } from 'src/app/app.config';
 import { GenericSubscriptionBase } from 'src/app/shared/generic/GenericSubscriptionBase';
 import { Todo } from 'src/app/shared/models/todo';
+import { AppActionsType } from 'src/app/store-conf/app.actions';
+import { AppState } from 'src/app/store-conf/app.state';
 
 @Component({
   selector: 'app-todo-list',
@@ -18,7 +19,7 @@ export class TodoListComponent extends GenericSubscriptionBase implements OnInit
   
   todos$: Observable<any>;
 
-  constructor(private store: Store<AppState>) { 
+  constructor(private store: Store<AppState>, private router: Router) { 
     super();
     this.todos$ = this.store.select(state => state.todos);
   }
@@ -27,11 +28,15 @@ export class TodoListComponent extends GenericSubscriptionBase implements OnInit
     let subs = this.todos$.subscribe(
       list => {
         this.todos = list.todos || list;
+        
+        // Done for Demo.  TODO add a force refresh
+        if(this.todos.length == 0){
+          this.reloadTodos();
+        }
       }
     );
     this.subscriptions.add(subs);
 
-    this.reloadTodos();
   }
 
   reloadTodos() {
@@ -47,6 +52,11 @@ export class TodoListComponent extends GenericSubscriptionBase implements OnInit
           type: AppActionsType.TODO_STATE_TOGGLE, 
           payload: {toggledTodo}
       });
+  }
+
+  goToTodoDetail(todo: Todo) {
+    //this.router.navigate([AppConfig.routing.mytodos.path + '/detail', { title: todo.title }]);
+    this.router.navigate([AppConfig.routing.mytodos.path + '/detail/' + todo.id ]);
   }
 
 }
