@@ -1,5 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
@@ -76,17 +77,13 @@ describe('TodoListComponent', () => {
   });
 
   it('go to todo detail', () => {
-    // const location: Location = TestBed.inject(Location);
-    // component.goToTodoDetail(todoList[0]);
-    // expect(location.path()).toBe(AppConfig.routing.mytodos.path + '/detail');
-
     let todo = todoList[0];
     const navigateSpy = spyOn(router, 'navigate');    
     component.goToTodoDetail(todo);
     expect(navigateSpy).toHaveBeenCalledWith([AppConfig.routing.mytodos.path + '/detail/'+ todo.id ]);
   });
 
-  it('should call dispatch to retrieve data if store empty', () => {
+  it('call dispatch to retrieve data if store empty', () => {
     const dispatchSpy = spyOn(store, 'dispatch').and.callThrough();  
 
     store.setState({ todos: [] });
@@ -94,6 +91,16 @@ describe('TodoListComponent', () => {
 
     expect(dispatchSpy).toHaveBeenCalled(); 
     expect(dispatchSpy).toHaveBeenCalledWith({ type: AppActionsType.LOAD });
+  });
+
+  it('open creation dialog', () => {
+    let dialog: MatDialog = TestBed.inject(MatDialog);
+    
+    const dialogSpy = spyOn(dialog, 'open');  
+
+    component.createNewTodo()
+
+    expect(dialogSpy).toHaveBeenCalled(); 
   });
 
   it('destroy all subscriptions', () => {

@@ -11,9 +11,9 @@ describe('AppTodosReducer', () => {
         done: false
     },
     {
-      id: 1,
-      title: "Other",
-      done: false
+        id: 1,
+        title: "Other",
+        done: false
     }];
 
 
@@ -38,12 +38,12 @@ describe('AppTodosReducer', () => {
         it("return the state with the todo's state changed", () => {
             // To done
             let appState: AppState = {
-                todos: [todoList[1],todoList[0]]
+                todos: [todoList[1], todoList[0]]
             }
             let expectedState: AppState = {
-                todos: [{...todoList[1], done:!todoList[1].done }, todoList[0]]
+                todos: [{ ...todoList[1], done: !todoList[1].done }, todoList[0]]
             }
-            let toggledTodo: Todo = {...todoList[1], done:!todoList[1].done };
+            let toggledTodo: Todo = { ...todoList[1], done: !todoList[1].done };
             let action = {
                 type: AppActionsType.TODO_STATE_TOGGLE,
                 payload: { toggledTodo }
@@ -52,21 +52,21 @@ describe('AppTodosReducer', () => {
 
             // to undone
             appState = {
-                todos: [{...todoList[0], done:!todoList[0].done }]
+                todos: [{ ...todoList[0], done: !todoList[0].done }]
             }
             expectedState = {
                 todos: [todoList[0]]
             }
-            toggledTodo= {...todoList[0], done:false };
+            toggledTodo = { ...todoList[0], done: false };
             action = {
                 type: AppActionsType.TODO_STATE_TOGGLE,
                 payload: { toggledTodo }
             };
             expect(appTodosReducer(appState, action)).toEqual(expectedState);
-            
+
         });
 
-        
+
     });
 
     describe('load todos', () => {
@@ -85,7 +85,36 @@ describe('AppTodosReducer', () => {
             };
             expect(appTodosReducer(appState, action)).toEqual(expectedState);
 
-            
+
         });
+    });
+
+
+    describe('create action', () => {
+
+        it("return the state with the new todo", () => {
+            let created: Todo = {
+                id: undefined,
+                title: 'New Todo',
+                description: 'test',
+                done: false
+            };
+            let appState: AppState = {
+                todos: [...todoList]
+            }
+            let expectedState: AppState = {
+                todos: [created, ...todoList]
+            }
+            let action = {
+                type: AppActionsType.TODO_CREATE_SUCCESS,
+                payload: { created }
+            };
+            expect(appTodosReducer(appState, action)).toEqual(expectedState);
+
+
+
+        });
+
+
     });
 });

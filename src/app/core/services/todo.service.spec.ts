@@ -41,4 +41,26 @@ describe('TodoService', () => {
     
     expect(retrievedList.length).toBe(todoList.length);
   });
+
+  it('create todo', () => {
+    let toCreate: Todo = {
+      id: undefined,
+      title: 'New Todo',
+      description: 'test',
+      done: false
+    };
+
+    let created: Todo|undefined;
+    service.createTodo(toCreate).subscribe(
+      (todo) => {
+        created = todo;
+      }
+    );
+
+    const request = controller.expectOne('/todo');
+    console.log(request);
+    request.flush({...toCreate, id:15});
+    
+    expect(created?.title).toBe(toCreate.title);
+  });
 });
